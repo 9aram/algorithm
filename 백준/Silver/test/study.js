@@ -1,21 +1,27 @@
+//const { listenerCount } = require("process");
 const input = require("fs").readFileSync("/Users/garam/Documents/projects/algorithm/백준/Silver/test/text.txt").toString().split(/\s+/);
-const N = Number(input[0]); //N명의 사람
-const K = Number(input[1]); //K번째 사람
 
-const que=[];
+let index = 0;
+//const number = input[index++] 해서 이걸 다시 쪼갰더니 정규식을 잘못알고있었던것.
+const N= Number(input[index++]);
+const M = Number(input[index++]);
+
+const mp = new Map();
+
+//i < index + N 이렇게 했더니 인덱스가 무한늘어남 
+for(let i=0; i<N; i++){//0,3/1,3/2,3
+    mp.set(input[index++],"1");//N의 갯수만큼 돌림
+}
+
 const answer=[];
-for (let i=1; i<=N ; i++){
-    que.push(i); //N명의 사람이 담긴 큐를 만든다. 배열(que)의 맨 뒤에 i를 추가하는 것
+for (let j=0 ; j<M; j++){//0,4/1,4/2,4/3,4
+    const name = input[index++];
+    if(mp.has(name)){
+        
+        answer.push(name);
+    };
 }
-
-while (que.length>0){
-    for (let i=0; i<K-1;i++){
-        que.push(que.shift()); //맨 앞 요소를 꺼내서 (그리고 배열에서 제거) 한 뒤 뒤에추가
-    }
-    answer.push(que.shift());//K번째 que에서 제거한뒤 답에 넣기
-}
-
-
-console.log("<"+answer.join(", ")+">");
-//console.log(`<${answer.join(", ")}>`); //백틱문법
+answer.sort();
+console.log(answer.length);
+console.log(answer.join("\n"));
 
