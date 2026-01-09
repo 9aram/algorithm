@@ -18,16 +18,3 @@ for (let i= N-2; i>=0;i-- ){
     }
 }
 console.log(count);
-
-const lastVal = input[input.length-1];
-let biggerN=input[input.length-1];
-
-for(let i=0; i<N; i++){
-    const value = input[index++];
-    if(value >biggerN){
-        count++
-        biggerN=value;
-    }
-
-
-}
