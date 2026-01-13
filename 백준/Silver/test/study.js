@@ -1,20 +1,39 @@
-const input = require("fs").readFileSync("/Users/garam/Documents/projects/algorithm/백준/Silver/test/text.txt").toString().split(/\s+/);
+const input = require("fs")
+  .readFileSync(
+    "/Users/garam/Documents/projects/algorithm/백준/Silver/test/text.txt"
+  )
+  .toString()
+  .split(/\n/); //일단 줄대로 끊는다
 
-let index = 0;
-const N = Number(input[index++]);
+const result = [];
+for (let line of input) {
+  if (line === ".") break; // 조건중 . 이나오면 마지막 줄이기에 종료
 
-const value = [];
-for(let i=0; i<N; i++){
-    value.push(Number(input[index++]));
-}
+  const stack = [];
+  let same = true;
 
-const stack = [];
-stack.push(value[value.length-1]);
-let count=1;
-for (let i= N-2; i>=0;i-- ){
-    if(value[i]>stack[stack.length-1]){
-        stack.push(value[i])
-        count++
+  for (let i = 0; i < line.length; i++) {
+    if (line[i] === "(" || line[i] === "[") {
+      //일단 여는 괄호나오면 무조건 스택에 담는다.
+      stack.push(line[i]);
+    } else if (line[i] === ")") {
+      if (stack.length === 0 || stack[stack.length - 1] !== "(") {
+        same = false;
+        break;
+      }
+      stack.pop();
+    } else if (line[i] === "]") {
+      if (stack.length === 0 || stack[stack.length - 1] !== "[") {
+        same = false;
+        break;
+      }
+      stack.pop();
     }
+  }
+  if (stack.length > 0) {
+    same = false;
+  }
+  result.push(same ? "yes" : "no");
+  //console.log(same ? "yes": "no");
 }
-console.log(count);
+console.log(result.join("\n"));
