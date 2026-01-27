@@ -4,7 +4,6 @@ const input = require("fs")
   )
   .toString()
   .split(/\s+/); //일단 줄대로 끊는다
-let count =0;
 let N = Number(input[0]);
 
 const dp = new Array(N+1).fill(0);
