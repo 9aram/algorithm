@@ -15,7 +15,7 @@ cables.sort((a,b) => a-b);
 
 let min =1; //정답이 될 수 있는 최소한의 값 (1cm)
 let max =cables[cables.length-1] ; //정답이 될 수 있는 최대한의 값 (가장 긴 랜선의 길이)
-let answer=0;
+let answer=0;//랜선을 몇 cm로 자를 것인가? (길이)
 
 while (min<=max){
 let mid = Math.floor((min+max)/2); 10,11
