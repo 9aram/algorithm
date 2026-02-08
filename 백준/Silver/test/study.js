@@ -1,24 +1,45 @@
-const input = require("fs")
-  .readFileSync(
-    "/Users/garam/Documents/projects/algorithm/백준/Silver/test/text.txt"
-  )
-  .toString()
-  .split(/\n/); //일단 줄대로 끊는다
+function solution(numbers) {
 
-const N = Number(input[0]);
-const arr = input[1].split(" ").map(Number);
-//Set으로 중복을 죽이고 → [...]으로 다시 배열로 만들어서 → sort로 정렬
-const uniqueArr = [... new Set(arr)]; //...:주머니 제거, set: 중복이 제거된 객체 생성
-//arr.sort((a, b) => a - b); 오름차순정렬
-uniqueArr.sort((a,b)=>a-b);
 
-const rankMap = new Map();
-//uniqueArr 값마다 순서 저장
-uniqueArr.forEach((val,idx)=>{
-  rankMap.set(val,idx)
-});
-let result =[];
-for(let i=0; i<N; i++){
-  result.push(rankMap.get(arr[i])); //원본배열을 들고와서 등수 매기기
+//이 숫자가 소수인지를 판별
+function isPrime(num){
+    if(num<2) return false;
+    for(let i=2; i<=Math.sqrt(num); i++){
+        if(num%i === 0) return false;
+    }
+    return true;
 }
-console.log(result.join(" "));
+const result = new Set();
+const arr = numbers.split("");//틀림 넘버해주면 dfs에서 문제생김 const arr = numbers.split("").map(Number);
+const visited = Array(arr.length).fill(false);
+
+// 일단 만들수있는모든 수 
+function dfs(chk){
+    if(chk.length>0) result.add(Number(chk));
+//1
+//17
+    for(let i=0; i<arr.length; i++){
+        if(!visited[i]){
+            visited[i]=true; 
+            dfs(chk+arr[i]);
+            visited[i]=false;
+        }
+    }
+}
+//  ├ visited[0] = true
+//  ├ dfs("1")
+//  │   ├ visited[1] = true
+//  │   ├ dfs("17")
+//  │   ├ visited[1] = false
+//  │   └ return
+//  ├ visited[0] = false   ← 🔥 여기서 실행
+//  └ 다음 i
+dfs("");
+
+// 소수찾기
+let count =0;
+    for(num of result){
+       if(isPrime(num))  count ++;
+    }
+return count;
+}
