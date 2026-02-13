@@ -1,0 +1,92 @@
+const fs = require("fs");
+const input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
+
+const n = Number(input[0]);
+
+// 예외: 카드가 1개면 비교 0
+if (n === 1) {
+  console.log(0);
+  return;
+}
+
+class MinHeap {
+  constructor() {
+    this.heap = [];
+  }
+
+  push(value) {
+    this.heap.push(value);
+    this.bubbleUp();
+  }
+
+  bubbleUp() {
+    let idx = this.heap.length - 1;
+
+    while (idx > 0) {
+      let parent = Math.floor((idx - 1) / 2);
+      if (this.heap[parent] <= this.heap[idx]) break;
+
+      [this.heap[parent], this.heap[idx]] =
+        [this.heap[idx], this.heap[parent]];
+      idx = parent;
+    }
+  }
+
+  pop() {
+    if (this.heap.length === 1) return this.heap.pop();
+
+    const min = this.heap[0];
+    this.heap[0] = this.heap.pop();
+    this.bubbleDown();
+    return min;
+  }
+
+  bubbleDown() {
+    let idx = 0;
+    const length = this.heap.length;
+
+    while (true) {
+      let left = idx * 2 + 1;
+      let right = idx * 2 + 2;
+      let smallest = idx;
+
+      if (left < length && this.heap[left] < this.heap[smallest]) {
+        smallest = left;
+      }
+
+      if (right < length && this.heap[right] < this.heap[smallest]) {
+        smallest = right;
+      }
+
+      if (smallest === idx) break;
+
+      [this.heap[idx], this.heap[smallest]] =
+        [this.heap[smallest], this.heap[idx]];
+      idx = smallest;
+    }
+  }
+
+  size() {
+    return this.heap.length;
+  }
+}
+
+// 🔹 힙에 입력
+const heap = new MinHeap();
+for (let i = 1; i <= n; i++) {
+  heap.push(Number(input[i]));
+}
+
+// 🔹 계산
+let answer = 0;
+
+while (heap.size() > 1) {
+  const a = heap.pop();
+  const b = heap.pop();
+
+  const sum = a + b;
+  answer += sum;
+  heap.push(sum);
+}
+
+console.log(answer);
