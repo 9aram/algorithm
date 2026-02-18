@@ -18,8 +18,9 @@ class MinHeap {
     this.heap.push(value);
     this.bubbleUp();
   }
-
-  bubbleUp() {
+//왼쪽은 i*2+1, 오른쪽은 i*2+2; 부모는 i-1/2
+  bubbleUp() { //현재위치를 구해서 부모 인덱스를 구해서 자식이 더크면 패스하고 부모가 더 크면 위치바꾼다
+   //새로 들어온 노드 하나만 이동, 부모랑만 비교, 왼/오 구분 필요 없음 ✅
     let idx = this.heap.length - 1;
 
     while (idx > 0) {
@@ -41,7 +42,7 @@ class MinHeap {
     return min;
   }
 
-  bubbleDown() {
+  bubbleDown() { //부모 아래에 자식 둘 있음, 둘 중 더 작은 애 선택해야 함, 그래서 왼/오 비교 필요 ✅
     let idx = 0;
     const length = this.heap.length;
 

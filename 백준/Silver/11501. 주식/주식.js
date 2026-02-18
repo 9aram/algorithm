@@ -15,7 +15,7 @@ for(let t=0; t<T; t++){
         
         if(prices[i]>maxprice){
             maxprice = prices[i] //// 상황 1: 오늘 가격이 더 비싸네? 기준점 업데이트!
-        }else{//상황 2: 미래(max_price)가 더 비싸네? 오늘 사서 미래에 팔자!
+        }else{//상황 2: 미래(max_price)가 더 비싸네? 오늘 사서 미래에 팔자! prices[i] < maxprice // 우리는 뒤에서부터 보기때문에 “i번째 날 이후(미래)에오늘보다 비싼 날이 실제로 존재한다
             total += (maxprice-prices[i]);
         }
     }
