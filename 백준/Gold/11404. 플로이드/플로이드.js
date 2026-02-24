@@ -1,5 +1,4 @@
 const fs = require('fs');
-// 백준 환경에서는 '/dev/stdin' 경로에서 입력을 읽어와야 해.
 const input = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
 
 const n = parseInt(input[0]);
